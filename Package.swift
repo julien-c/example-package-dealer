@@ -14,5 +14,6 @@ let package = Package(
     name: "Dealer",
     dependencies: [
         .Package(url: "https://github.com/apple/example-package-deckofplayingcards.git", majorVersion: 1),
+        .Package(url: "https://github.com/julien-c/swifter.git", majorVersion: 1),
     ]
 )

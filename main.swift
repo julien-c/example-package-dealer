@@ -13,18 +13,32 @@ import Glibc
 srandom(UInt32(clock()))
 #endif
 
+import Foundation
 import DeckOfPlayingCards
+import Swifter
+
 
 let numberOfCards = 10
 
-var deck = Deck.standard52CardDeck()
-deck.shuffle()
+// var deck = Deck.standard52CardDeck()
+// deck.shuffle()
 
-for _ in 0..<numberOfCards {
-    guard let card = deck.deal() else {
-        print("No More Cards!")
-        break
-    }
+// for _ in 0..<numberOfCards {
+//     guard let card = deck.deal() else {
+//         print("No More Cards!")
+//         break
+//     }
 
-    print(card)
+//     print(card)
+// }
+
+
+let server = demoServer(nil)
+
+do {
+    try server.start()
+    print("Server has started (port = 8080). Try to connect now...")
+    NSRunLoop.mainRunLoop().run()
+} catch {
+    print("Server start error: \(error)")
 }
