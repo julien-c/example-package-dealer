@@ -20,25 +20,37 @@ import Swifter
 
 let numberOfCards = 10
 
-// var deck = Deck.standard52CardDeck()
-// deck.shuffle()
 
-// for _ in 0..<numberOfCards {
-//     guard let card = deck.deal() else {
-//         print("No More Cards!")
-//         break
-//     }
-
-//     print(card)
-// }
 
 
 let server = demoServer(nil)
 
 do {
+    server["json"] = nil // This crashes because of Json serialization
+    
+    server["cards"] = { request in
+        var deck = Deck.standard52CardDeck()
+        deck.shuffle()
+        
+        var body = ""
+        for _ in 0..<numberOfCards {
+            guard let card = deck.deal() else {
+                print("No More Cards!")
+                break
+            }
+
+            body += " \(card)"
+        }
+        
+        return .OK(.Html(body))
+    }
+    
     try server.start()
     print("Server has started (port = 8080). Try to connect now...")
-    NSRunLoop.mainRunLoop().run()
+    
+    while true {
+        sleep(1)
+    }
 } catch {
     print("Server start error: \(error)")
 }
